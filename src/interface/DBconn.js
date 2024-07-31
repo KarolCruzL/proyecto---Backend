@@ -1,22 +1,24 @@
 const mysql = require('mysql2/promise');
 const config = require('../config.js');
-const { createPool } = require('mysql2');
 
-const dbauth = {
-    host: config.ServerDB,
-    user: config.UserDB,
-    password: config.PasswordDB,
-    database: config.DatabaseDB,
-    port: config.PortDB,
-    waitForconections: true,
-    connectinLimt: 10,
-    queueLimit: 0
-};  
+const dbAuth = {
+  host: config.ServerDB,
+  user: config.UserDB,
+  password: config.PasswordDB,
+  database: config.Database,
+  port: config.PortDB
+};
 
-async function getConnection(){
-    const pool = mysql.createPool (dbauth);
-    return createPool; 
+// Crear un pool de conexiones
+const pool = mysql.createPool(dbAuth);
+
+async function getConnection() {
+  try {
+    return await pool.getConnection();
+  } catch (error) {
+    console.error('Error obteniendo conexión a la base de datos:', error);
+    throw error;
+  }
 }
 
 module.exports = getConnection;
-

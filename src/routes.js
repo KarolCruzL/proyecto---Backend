@@ -1,13 +1,15 @@
 const Router = require('express');
 const router = Router();
 
-// Import routes 
+// Import routes
+const authRoutes = require('./modules/auth/routes/auth.routes');
 
-// Status api endinnt
+// status api endpoint
 router.get('/api-status', (req, res) => {
-    res.send({'Status': 'on'});
-});
+  return res.send({ 'Status': 'on' })
+})
 
-// Use rotes
+// User routes
+router.use(authRoutes);
 
 module.exports = router;
